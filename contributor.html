@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeet Biswas Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- header -->
+  <header id="header" class="vh-100 flex">
+    <div class="container">
+      <div class="header-content">
+        <h1>
+          I'm a <br /><span class="typewrite" data-loop="yes" data-speed="100" data-delay="2000"
+            data-words='["photographer", "videographer", "Techie"]'></span>
+        </h1>
+        <h3>Jeet Biswas</h3>
+
+        <ul class="social-links">
+          <li>
+            <a href="#" class="flex">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex">
+              <i class="fab fa-pinterest"></i>
+            </a>
+            <a href="#" class="flex" onclick="logout()" title="Logout">
+              <i class="fas fa-sign-out-alt"></i>
+            </a>
+          </li>
+        </ul>
+
+        <script>
+          // Login/Logout Logic
+          function checkAuth() {
+            if (!sessionStorage.getItem('isContributor')) {
+              window.location.href = 'index.html';
+            }
+          }
+
+          function logout() {
+            sessionStorage.removeItem('isContributor');
+            window.location.href = 'index.html';
+          }
+
+          // Check on load
+          checkAuth();
+        </script>
+      </div>
+    </div>
+  </header>
+  <!-- end of header -->
+
+  <!-- main content -->
+  <main>
+    <!-- about section -->
+    <section id="about" class="about py-7">
+      <div class="container">
+        <div class="about-content grid">
+          <div class="about-left">
+            <img src="images/about-pic.jpg" alt="" />
+          </div>
+          <div class="about-right">
+            <div class="title">
+              <h2>About Me</h2>
+            </div>
+            <p class="lead">
+              I am a visual storyteller, capturing life in both stills and
+              motion. I'm a photographer and videographer who specializes in
+              the creation of authentic, emotive, and timeless visuals..
+            </p>
+            <p class="lead">
+              From intimate portraits to cinematic film-making, my work
+              involves freezing moments in time and telling stories best left
+              unsaid. Every project is an opportunity to meld art, light, and
+              perspective into something intrinsically human..
+            </p>
+            <a href="#work" class="btn-down">
+              <i class="fas fa-chevron-down"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end of about section -->
+
+    <!-- requirements section -->
+    <section id="requirements" class="py-7 bg-light">
+      <div class="container">
+        <div class="requirements-content">
+          <div class="title">
+            <h2>Find Contributors</h2>
+            <p class="lead">Tell us what you need, and we'll show you the best work from our contributors.</p>
+          </div>
+
+          <div class="requirements-form-container">
+            <form id="requirements-form">
+              <div class="form-group">
+                <label for="requirement-type" class="lead">I am looking for:</label>
+                <select id="requirement-type" class="form-control">
+                  <option value="photography">Photography</option>
+                  <option value="videography">Videography</option>
+                  <option value="web-design">Web Design/Tech</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <textarea id="requirement-desc" class="form-control" placeholder="Describe your project details..."
+                  rows="4"></textarea>
+              </div>
+              <button type="submit" class="btn-submit btn">Find Matches</button>
+            </form>
+          </div>
+
+          <div id="results-container" class="results-grid grid" style="display: none; margin-top: 4rem;">
+            <!-- Results will be injected here -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end of requirements section -->
+
+    <!-- work section -->
+    <section id="work" class="vh-100 flex py-7">
+      <div class="container">
+        <div class="work-content">
+          <div class="title">
+            <h2>what am i doing?</h2>
+          </div>
+          <ul class="work-top grid">
+            <li class="lead">
+              <i class="fas fa-dot-circle"></i> We work according to the
+              guidelines of the American Institute of Digital Photography with
+              regard to color management and file handling.
+            </li>
+            <li class="lead">
+              <i class="fas fa-dot-circle"></i> Your files will be stored
+              multiples times on two locations
+            </li>
+            <li class="lead">
+              <i class="fas fa-dot-circle"></i> We work with the terms and
+              conditions of the Dupho, registered at the court in Ohio with
+              number 08/2018.
+            </li>
+            <li class="lead">
+              <i class="fas fa-dot-circle"></i> We always have back-up
+              equipment at hand, also on location.
+            </li>
+          </ul>
+
+          <div class="work-bottom grid">
+            <div>
+              <span class="icon"><img src="images/wildlife-icon.png" /></span>
+              <h3>Wildlife</h3>
+            </div>
+            <div>
+              <span class="icon"><img src="images/portrait-icon.png" /></span>
+              <h3>Portrait</h3>
+            </div>
+            <div>
+              <span class="icon"><img src="images/landscape-icon.png" /></span>
+              <h3>Landscape</h3>
+            </div>
+            <div>
+              <span class="icon"><img src="images/family-icon.png" /></span>
+              <h3>Family</h3>
+            </div>
+          </div>
+          <a href="#portfolio" class="btn-down btn-down-white">
+            <i class="fas fa-chevron-down"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- end of work section -->
+
+    <!-- portfolio section -->
+    <section id="portfolio" class="vh-100 py-7">
+      <div class="container">
+        <div class="portfolio-content">
+          <div class="title">
+            <h2>my last works</h2>
+            <a href="#videography" class="btn-down">
+              <i class="fas fa-chevron-down"></i>
+            </a>
+          </div>
+
+          <div class="portfolio-grid grid">
+            <div><img src="images/port-1.jpg" /></div>
+            <div><img src="images/port-2.jpg" /></div>
+            <div><img src="images/port-3.jpg" /></div>
+            <div><img src="images/port-4.jpg" /></div>
+            <div><img src="images/port-5.jpg" /></div>
+            <div><img src="images/port-6.jpg" /></div>
+            <div><img src="images/port-7.jpg" /></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end of portfolio section -->
+
+    <!-- videography showcase section -->
+    <section id="videography" class="py-7">
+      <div class="container">
+        <div class="videography-content">
+          <div class="title">
+            <h2>videography showcase</h2>
+            <p class="lead">
+              Here are some of my recent video projects — from cinematic short
+              films to client commercials.
+            </p>
+          </div>
+
+          <div class="video-grid grid">
+            <div class="video-item">
+              <iframe width="100%" height="315" src="https://www.youtube.com/embed/G9NRzrx7m4U"
+                title="Videography Project 1" frameborder="0" allowfullscreen></iframe>
+              <h3>Cinematic Nature Short</h3>
+              <p class="lead">
+                Captured the serene beauty of nature with storytelling
+                transitions.
+              </p>
+            </div>
+
+            <div class="video-item">
+              <iframe width="100%" height="315" src="https://www.youtube.com/embed/_Ye4HANopJM"
+                title="Videography Project 2" frameborder="0" allowfullscreen></iframe>
+              <h3>Event Highlight Reel</h3>
+              <p class="lead">
+                Highlights from a live music concert showcasing dynamic camera
+                movements.
+              </p>
+            </div>
+          </div>
+
+          <a href="#contact" class="btn-down">
+            <i class="fas fa-chevron-down"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- end of videography showcase section -->
+
+    <!-- contact section -->
+    <section id="contact" class="py-7">
+      <div class="container">
+        <div class="contact-content flex">
+          <div class="contact-left">
+            <div class="title">
+              <h2>contact with me</h2>
+            </div>
+            <p class="lead">
+              <i class="fas fa-phone-alt"></i> +91 6290326545
+            </p>
+            <p class="lead">
+              <i class="fas fa-envelope"></i> contact@gmail.com
+            </p>
+            <form id="contact-form">
+              <input type="text" id="name" class="form-control" placeholder="Your name here ..." required />
+              <input type="email" id="email" class="form-control" placeholder="Your email here" required />
+              <textarea id="message" class="form-control" placeholder="Your message here ..." required></textarea>
+              <input type="submit" class="btn-submit btn" value="Submit" />
+            </form>
+            <p id="form-status"></p>
+          </div>
+
+          <div class="contact-right">
+            <img src="images/contact-pic.jpg" alt="contact image" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end of contact section -->
+
+    <!-- instagram section -->
+    <section id="insta" class="py-7">
+      <div class="container">
+        <div class="insta-content">
+          <div class="title">
+            <h2>Tech Works</h2>
+            <a href="#footer" class="btn-down btn-down-white">
+              <i class="fas fa-chevron-down"></i>
+            </a>
+          </div>
+          <div class="insta-grid grid">
+            <div><img src="website1.jpg" /></div>
+            <div><img src="website2.jpg" /></div>
+            <div><img src="website3.jpg" /></div>
+            <div><img src="website4.jpg" /></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end of instagram section -->
+  </main>
+  <!-- end of main content -->
+
+  <!-- footer -->
+  <footer id="footer" class="py-7">
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <h3>Jeet Biswas</h3>
+          <div><img src="images/about-pic.jpg" /></div>
+        </div>
+
+        <div>
+          <h3>Links</h3>
+          <ul class="flex">
+            <li><a href="#">About Me</a></li>
+            <li><a href="#">Work</a></li>
+            <li><a href="#">Portfolio</a></li>
+            <li><a href="#">Contact Me</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- end of footer -->
+
+  <!-- typewriting js -->
+  <script src="typewriting-master/typewriting.js"></script>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script>
+    (function () {
+      emailjs.init({
+        publicKey: "9xB4Hh0f9AciqVlA-", // Replace with your EmailJS public key
+      });
+    })();
+
+    document
+      .getElementById("contact-form")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Show loading / disable button if you want
+        const status = document.getElementById("form-status");
+        status.textContent = "Sending...";
+
+        const params = {
+          from_name: document.getElementById("name").value,
+          from_email: document.getElementById("email").value,
+          message: document.getElementById("message").value,
+        };
+
+        emailjs
+          .send("service_ny8af7f", "template_v45blyg", params)
+          .then(() => {
+            status.textContent = "Message sent successfully! ✅";
+            document.getElementById("contact-form").reset();
+          })
+          .catch((err) => {
+            console.error("FAILED...", err);
+            status.textContent = "Failed to send. Please try again ❌";
+          });
+      });
+
+    // Requirement Matching Logic
+    const mockData = {
+      photography: [
+        { src: "images/port-1.jpg", title: "Portrait Session", contributor: "Jeet Biswas" },
+        { src: "images/port-2.jpg", title: "Nature Shot", contributor: "Jeet Biswas" },
+        { src: "images/port-3.jpg", title: "Urban Life", contributor: "Jeet Biswas" }
+      ],
+      videography: [
+        { src: "https://www.youtube.com/embed/G9NRzrx7m4U", type: "video", title: "Cinematic Nature", contributor: "Jeet Biswas" },
+        { src: "https://www.youtube.com/embed/_Ye4HANopJM", type: "video", title: "Event Highlights", contributor: "Jeet Biswas" }
+      ],
+      "web-design": [
+        { src: "website1.jpg", title: "E-commerce Site", contributor: "Jeet Biswas" },
+        { src: "website2.jpg", title: "Portfolio Theme", contributor: "Jeet Biswas" }
+      ]
+    };
+
+    document.getElementById('requirements-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const type = document.getElementById('requirement-type').value;
+      const container = document.getElementById('results-container');
+
+      container.innerHTML = '';
+      container.style.display = 'grid';
+
+      const data = mockData[type] || [];
+
+      if (data.length === 0) {
+        container.innerHTML = '<p class="lead">No matches found at the moment.</p>';
+        return;
+      }
+
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'result-item';
+
+        let content = '';
+        if (item.type === 'video') {
+          content = `<iframe width="100%" height="200" src="${item.src}" frameborder="0" allowfullscreen></iframe>`;
+        } else {
+          content = `<img src="${item.src}" alt="${item.title}" style="height: 200px; object-fit: cover;">`;
+        }
+
+        div.innerHTML = `
+          ${content}
+          <h3>${item.title}</h3>
+          <p>By: ${item.contributor}</p>
+        `;
+        container.appendChild(div);
+      });
+    });
+  </script>
+</body>
+
+</html>

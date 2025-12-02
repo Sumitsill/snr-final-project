@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photography - Jeet Biswas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .landing-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('images/header-banner.jpg') center/cover no-repeat fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .landing-content h1 {
+            font-size: 5rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .landing-content p {
+            font-size: 2rem;
+            color: #ddd;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* Filter Styles */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid #333;
+            background: transparent;
+            color: #333;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #333;
+            color: #fff;
+        }
+
+        .photography-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover .photo-info {
+            transform: translateY(0);
+        }
+
+        .best-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f1c40f;
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <header class="landing-header">
+        <div class="container">
+            <div class="landing-content">
+                <h1>Photography</h1>
+                <p>Capturing moments that last a lifetime.</p>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-7">
+        <div class="container">
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="wildlife">Wildlife</button>
+                <button class="filter-btn" data-filter="portrait">Portrait</button>
+                <button class="filter-btn" data-filter="landscape">Landscape</button>
+                <button class="filter-btn" data-filter="family">Family</button>
+            </div>
+
+            <div id="photography-grid" class="photography-grid">
+                <!-- Images will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mock Data
+        const staticPhotographyData = [
+            { src: 'images/port-1.jpg', category: 'portrait', contributor: 'Jeet Biswas', isBest: true, title: 'Soulful Eyes' },
+            { src: 'images/port-2.jpg', category: 'wildlife', contributor: 'Jeet Biswas', isBest: true, title: 'Wild Spirit' },
+            { src: 'images/port-3.jpg', category: 'landscape', contributor: 'Jeet Biswas', isBest: true, title: 'Urban Sunset' },
+            { src: 'images/port-4.jpg', category: 'family', contributor: 'Jeet Biswas', isBest: true, title: 'Family Bond' },
+            { src: 'images/port-5.jpg', category: 'portrait', contributor: 'Jeet Biswas', isBest: false, title: 'Studio Shot' },
+            { src: 'images/port-6.jpg', category: 'wildlife', contributor: 'Jeet Biswas', isBest: true, title: 'Morning Dew' },
+            { src: 'images/port-7.jpg', category: 'landscape', contributor: 'Jeet Biswas', isBest: false, title: 'Mountain View' },
+        ];
+
+        const grid = document.getElementById('photography-grid');
+        const buttons = document.querySelectorAll('.filter-btn');
+        let photographyData = [];
+
+        async function loadMedia() {
+            try {
+                const response = await fetch('http://localhost:3000/api/media');
+                if (response.ok) {
+                    const storedMedia = await response.json();
+                    const dynamicPhotographyData = storedMedia.filter(item => item.type === 'photography');
+                    photographyData = [...dynamicPhotographyData, ...staticPhotographyData];
+                    renderImages('all');
+                }
+            } catch (error) {
+                console.error('Error loading media:', error);
+                photographyData = [...staticPhotographyData];
+                renderImages('all');
+            }
+        }
+
+        function renderImages(filter) {
+            grid.innerHTML = '';
+
+            const filteredData = photographyData.filter(item => {
+                if (!item.isBest) return false;
+                if (filter === 'all') return true;
+                return item.category === filter;
+            });
+
+            if (filteredData.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; font-size: 1.5rem;">No best images found for this category.</p>';
+                return;
+            }
+
+            filteredData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'photo-item';
+
+                const contributorLink = item.userId
+                    ? `<a href="contributor-profile.html?user=${item.userId}" style="color: inherit; text-decoration: underline;">${item.contributor}</a>`
+                    : item.contributor;
+
+                div.innerHTML = `
+                    <img src="${item.src}" alt="${item.title}">
+                    <div class="best-badge"><i class="fas fa-star"></i> Best</div>
+                    <div class="photo-info">
+                        <h3>${item.title}</h3>
+                        <p>By: ${contributorLink}</p>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        loadMedia();
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                renderImages(filter);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

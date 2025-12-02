@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Videography - Jeet Biswas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .landing-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('images/header-banner.jpg') center/cover no-repeat fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .landing-content h1 {
+            font-size: 5rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .landing-content p {
+            font-size: 2rem;
+            color: #ddd;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* Filter Styles */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid #333;
+            background: transparent;
+            color: #333;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #333;
+            color: #fff;
+        }
+
+        .best-badge {
+            display: inline-block;
+            background: #f1c40f;
+            color: #333;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <header class="landing-header">
+        <div class="container">
+            <div class="landing-content">
+                <h1>Videography</h1>
+                <p>Telling stories through motion and sound.</p>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-7">
+        <div class="container">
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="cinematic">Cinematic</button>
+                <button class="filter-btn" data-filter="commercial">Commercial</button>
+                <button class="filter-btn" data-filter="event">Event</button>
+                <button class="filter-btn" data-filter="documentary">Documentary</button>
+            </div>
+
+            <div id="videography-grid" class="video-grid">
+                <!-- Videos will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mock Data
+        const staticVideographyData = [
+            {
+                src: 'https://www.youtube.com/embed/G9NRzrx7m4U',
+                category: 'cinematic',
+                contributor: 'Jeet Biswas',
+                isBest: true,
+                title: 'Cinematic Nature Short',
+                description: 'Captured the serene beauty of nature with storytelling transitions.'
+            },
+            {
+                src: 'https://www.youtube.com/embed/_Ye4HANopJM',
+                category: 'event',
+                contributor: 'Jeet Biswas',
+                isBest: true,
+                title: 'Event Highlight Reel',
+                description: 'Highlights from a live music concert showcasing dynamic camera movements.'
+            },
+            {
+                src: 'https://www.youtube.com/embed/LXb3EKWsInQ',
+                category: 'commercial',
+                contributor: 'Jeet Biswas',
+                isBest: true,
+                title: 'Product Commercial',
+                description: 'Sleek and modern product showcase for a tech brand.'
+            },
+            {
+                src: 'https://www.youtube.com/embed/tgbNymZ7vqY',
+                category: 'documentary',
+                contributor: 'Jeet Biswas',
+                isBest: true,
+                title: 'City Life Doc',
+                description: 'A short documentary exploring the daily lives of city dwellers.'
+            },
+            {
+                src: 'https://www.youtube.com/embed/ScMzIvxBSi4',
+                category: 'cinematic',
+                contributor: 'Jeet Biswas',
+                isBest: false,
+                title: 'Travel Vlog',
+                description: 'A fun travel vlog from my recent trip.'
+            },
+            {
+                src: 'https://www.youtube.com/embed/EngW7tLk6R8',
+                category: 'event',
+                contributor: 'Jeet Biswas',
+                isBest: true,
+                title: 'Wedding Highlights',
+                description: 'Emotional and beautiful moments from a summer wedding.'
+            }
+        ];
+
+        const grid = document.getElementById('videography-grid');
+        const buttons = document.querySelectorAll('.filter-btn');
+        let videographyData = [];
+
+        async function loadMedia() {
+            try {
+                const response = await fetch('http://localhost:3000/api/media');
+                if (response.ok) {
+                    const storedMedia = await response.json();
+                    const dynamicVideographyData = storedMedia.filter(item => item.type === 'videography');
+                    videographyData = [...dynamicVideographyData, ...staticVideographyData];
+                    renderVideos('all');
+                }
+            } catch (error) {
+                console.error('Error loading media:', error);
+                videographyData = [...staticVideographyData];
+                renderVideos('all');
+            }
+        }
+
+        function renderVideos(filter) {
+            grid.innerHTML = '';
+
+            const filteredData = videographyData.filter(item => {
+                if (!item.isBest) return false;
+                if (filter === 'all') return true;
+                return item.category === filter;
+            });
+
+            if (filteredData.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; font-size: 1.5rem;">No best videos found for this category.</p>';
+                return;
+            }
+
+            filteredData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'video-item';
+
+                let mediaContent = '';
+                if (item.src.startsWith('data:video')) {
+                    // It's a local video upload (Data URL)
+                    mediaContent = `<video width="100%" height="200" controls src="${item.src}"></video>`;
+                } else {
+                    // It's a YouTube/External link
+                    mediaContent = `<iframe width="100%" height="200" src="${item.src}" frameborder="0" allowfullscreen></iframe>`;
+                }
+
+                const contributorLink = item.userId
+                    ? `<a href="contributor-profile.html?user=${item.userId}" style="color: inherit; text-decoration: underline;">${item.contributor}</a>`
+                    : item.contributor;
+
+                div.innerHTML = `
+                    ${mediaContent}
+                    <div style="margin-top: 1rem;">
+                        <span class="best-badge"><i class="fas fa-star"></i> Best</span>
+                        <h3>${item.title}</h3>
+                        <p class="lead" style="font-size: 1.4rem;">${item.description}</p>
+                        <p style="font-size: 1.2rem; color: #777; margin-top: 0.5rem;">By: ${contributorLink}</p>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        loadMedia();
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                renderVideos(filter);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Design - Jeet Biswas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .landing-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('images/header-banner.jpg') center/cover no-repeat fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .landing-content h1 {
+            font-size: 5rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .landing-content p {
+            font-size: 2rem;
+            color: #ddd;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* Filter Styles */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid #333;
+            background: transparent;
+            color: #333;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #333;
+            color: #fff;
+        }
+
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .design-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            background: #fff;
+        }
+
+        .design-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .design-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .design-info {
+            padding: 1.5rem;
+        }
+
+        .best-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f1c40f;
+            color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <header class="landing-header">
+        <div class="container">
+            <div class="landing-content">
+                <h1>Web Design</h1>
+                <p>Crafting digital experiences that inspire.</p>
+                <!-- Add specific web design content or gallery here later -->
+            </div>
+        </div>
+    </header>
+
+    <section class="py-7">
+        <div class="container">
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="ecommerce">E-commerce</button>
+                <button class="filter-btn" data-filter="portfolio">Portfolio</button>
+                <button class="filter-btn" data-filter="blog">Blog</button>
+                <button class="filter-btn" data-filter="corporate">Corporate</button>
+            </div>
+
+            <div id="web-design-grid" class="design-grid">
+                <!-- Designs will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mock Data
+        const staticWebDesignData = [
+            { src: 'images/website1.jpg', category: 'ecommerce', contributor: 'Jeet Biswas', isBest: true, title: 'Shopify Theme', description: 'A modern e-commerce theme.' },
+            { src: 'images/website2.jpg', category: 'portfolio', contributor: 'Jeet Biswas', isBest: true, title: 'Creative Portfolio', description: 'Minimalist portfolio for artists.' },
+            { src: 'images/website3.jpg', category: 'blog', contributor: 'Jeet Biswas', isBest: true, title: 'Tech Blog', description: 'Clean layout for tech news.' },
+            { src: 'images/website4.jpg', category: 'corporate', contributor: 'Jeet Biswas', isBest: true, title: 'BizCorp Site', description: 'Professional corporate website.' },
+            { src: 'images/website1.jpg', category: 'ecommerce', contributor: 'Jeet Biswas', isBest: false, title: 'Old Shop', description: 'Legacy design.' },
+            { src: 'images/website2.jpg', category: 'portfolio', contributor: 'Jeet Biswas', isBest: true, title: 'Dark Portfolio', description: 'Dark mode portfolio.' }
+        ];
+
+        const grid = document.getElementById('web-design-grid');
+        const buttons = document.querySelectorAll('.filter-btn');
+        let webDesignData = [];
+
+        async function loadMedia() {
+            try {
+                const response = await fetch('http://localhost:3000/api/media');
+                if (response.ok) {
+                    const storedMedia = await response.json();
+                    const dynamicWebDesignData = storedMedia.filter(item => item.type === 'web-design');
+                    webDesignData = [...dynamicWebDesignData, ...staticWebDesignData];
+                    renderDesigns('all');
+                }
+            } catch (error) {
+                console.error('Error loading media:', error);
+                webDesignData = [...staticWebDesignData];
+                renderDesigns('all');
+            }
+        }
+
+        function renderDesigns(filter) {
+            grid.innerHTML = '';
+
+            const filteredData = webDesignData.filter(item => {
+                if (!item.isBest) return false;
+                if (filter === 'all') return true;
+                return item.category === filter;
+            });
+
+            if (filteredData.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; font-size: 1.5rem;">No best designs found for this category.</p>';
+                return;
+            }
+
+            filteredData.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'design-item';
+
+                const contributorLink = item.userId
+                    ? `<a href="contributor-profile.html?user=${item.userId}" style="color: inherit; text-decoration: underline;">${item.contributor}</a>`
+                    : item.contributor;
+
+                div.innerHTML = `
+                    <img src="${item.src}" alt="${item.title}">
+                    <div class="best-badge"><i class="fas fa-star"></i> Best</div>
+                    <div class="design-info">
+                        <h3>${item.title}</h3>
+                        <p class="lead" style="font-size: 1.4rem; margin-bottom: 0.5rem;">${item.description}</p>
+                        <p style="font-size: 1.2rem; color: #777;">By: ${contributorLink}</p>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        loadMedia();
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                renderDesigns(filter);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contributor Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .profile-header {
+            background: #333;
+            color: #fff;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #f1c40f;
+            margin-bottom: 1rem;
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-bio {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #f1c40f;
+        }
+
+        .contact-info {
+            background: #f4f4f4;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .contact-item {
+            display: inline-block;
+            margin: 0 20px;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .portfolio-section {
+            padding: 4rem 0;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .portfolio-item img,
+        .portfolio-item video {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+
+        .portfolio-info h3 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .portfolio-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="profile-header">
+        <div class="container">
+            <img src="images/about-pic.jpg" alt="Profile Picture" class="profile-pic" id="displayPic">
+            <h1 class="profile-name" id="displayName">Contributor Name</h1>
+            <p class="profile-bio" id="displayBio">This contributor hasn't added a bio yet.</p>
+
+            <div class="social-links" id="socialLinks">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </header>
+
+    <section class="contact-info">
+        <div class="container">
+            <div class="contact-item" id="displayEmail">
+                <i class="fas fa-envelope"></i> <span>email@example.com</span>
+            </div>
+            <div class="contact-item" id="displayPhone">
+                <i class="fas fa-phone"></i> <span>+1 234 567 890</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem;">My Portfolio</h2>
+            <div class="portfolio-grid" id="portfolioGrid">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('user');
+
+            if (!userId) {
+                document.body.innerHTML = '<h1 style="text-align:center; margin-top: 5rem;">User not found</h1>';
+                return;
+            }
+
+            loadUserProfile(userId);
+            loadUserPortfolio(userId);
+        });
+
+        async function loadUserProfile(userId) {
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+                if (response.ok) {
+                    const user = await response.json();
+
+                    document.getElementById('displayName').textContent = user.name || 'Contributor';
+                    document.getElementById('displayBio').textContent = user.bio || 'No bio available.';
+
+                    if (user.profilePic) {
+                        document.getElementById('displayPic').src = user.profilePic;
+                    }
+
+                    // Contact Info
+                    const emailEl = document.getElementById('displayEmail');
+                    if (user.contactEmail || user.email) {
+                        emailEl.querySelector('span').textContent = user.contactEmail || user.email;
+                        emailEl.style.display = 'inline-block';
+                    } else {
+                        emailEl.style.display = 'none';
+                    }
+
+                    const phoneEl = document.getElementById('displayPhone');
+                    if (user.phone) {
+                        phoneEl.querySelector('span').textContent = user.phone;
+                        phoneEl.style.display = 'inline-block';
+                    } else {
+                        phoneEl.style.display = 'none';
+                    }
+
+                    // Social Links
+                    const socialContainer = document.getElementById('socialLinks');
+                    socialContainer.innerHTML = ''; // Clear previous
+                    if (user.instagram) {
+                        socialContainer.innerHTML += `<a href="${user.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>`;
+                    }
+                    if (user.linkedin) {
+                        socialContainer.innerHTML += `<a href="${user.linkedin}" target="_blank"><i class="fab fa-linkedin"></i></a>`;
+                    }
+                } else {
+                    document.body.innerHTML = '<h1 style="text-align:center; margin-top: 5rem;">User not found</h1>';
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+            }
+        }
+
+        async function loadUserPortfolio(userId) {
+            try {
+                const response = await fetch('http://localhost:3000/api/media');
+                if (response.ok) {
+                    const mediaList = await response.json();
+                    const userMedia = mediaList.filter(item => item.userId === userId);
+                    const grid = document.getElementById('portfolioGrid');
+                    grid.innerHTML = '';
+
+                    if (userMedia.length === 0) {
+                        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No work uploaded yet.</p>';
+                        return;
+                    }
+
+                    userMedia.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'portfolio-item';
+
+                        let mediaContent = '';
+                        if (item.type === 'videography' || item.src.startsWith('data:video')) {
+                            mediaContent = `<video src="${item.src}" controls></video>`;
+                        } else {
+                            mediaContent = `<img src="${item.src}" alt="${item.title}">`;
+                        }
+
+                        div.innerHTML = `
+                            ${mediaContent}
+                            <div class="portfolio-info">
+                                <h3>${item.title}</h3>
+                                <p>${item.category} | ${item.type}</p>
+                            </div>
+                        `;
+                        grid.appendChild(div);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading portfolio:', error);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
